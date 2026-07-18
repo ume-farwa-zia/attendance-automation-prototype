@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Check-in — SafeX Attendance{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <div class="eyebrow">Employee Portal</div>
+        <h4 class="mb-3">Scan your QR to check in</h4>
+
+        <div id="reader" style="width: 100%;"></div>
+
+        <div class="mt-3">
+          <label class="form-label small fw-semibold">Location status</label>
+          <div id="locStatus" class="text-muted small">requesting permission…</div>
+        </div>
+
+        <div id="resultBox" class="mt-3"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<script src="{{ url_for('static', filename='js/scanner.js') }}"></script>
+{% endblock %}

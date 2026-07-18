@@ -1,0 +1,6 @@
+employee_id,full_name,department,phone,email
+EMP-001,Ayesha Khan,Engineering,+923001234567,ayesha.khan@example.com
+EMP-002,Bilal Ahmed,Sales,+923001234568,bilal.ahmed@example.com
+EMP-003,Sara Malik,HR,+923001234569,sara.malik@example.com
+EMP-004,Usman Tariq,Engineering,+923001234570,usman.tariq@example.com
+EMP-005,Hina Raza,Marketing,+923001234571,hina.raza@example.com
