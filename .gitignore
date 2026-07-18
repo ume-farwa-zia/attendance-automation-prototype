@@ -3,4 +3,5 @@ __pycache__/
 .env
 database/attendance.db
 venv/
+.venv/
 .ipynb_checkpoints/
