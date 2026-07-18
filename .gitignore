@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.env
+database/attendance.db
+venv/
+.ipynb_checkpoints/
