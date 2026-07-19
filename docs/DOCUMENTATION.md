@@ -12,6 +12,7 @@ design rationale. This file covers setup and usage.
 pip install -r requirements.txt
 cp .env.example .env
 # edit .env: set OFFICE_LATITUDE/LONGITUDE to your real office location,
+# set MANAGER_DASHBOARD_PASSWORD for protected dashboard access,
 # and (optionally) GEMINI_API_KEY for live AI insights
 ```
 
@@ -29,7 +30,7 @@ and writes each one's QR code image to `static/qr/<employee_id>.png`.
 python app.py
 ```
 - Employee check-in page: `http://127.0.0.1:5000/`
-- Manager dashboard: `http://127.0.0.1:5000/dashboard`
+- Manager dashboard: `http://127.0.0.1:5000/manager/login` then `/dashboard`
 
 To actually scan a QR with your phone's camera, the browser needs camera +
 location permission, which most browsers only grant over `https://` or
@@ -78,7 +79,10 @@ summary (attendance rate, health score, recommendations) instead.
 | GET | `/api/employees/<id>/qr` | Fetch an employee's QR image |
 | POST | `/checkin` | Process a check-in (token + lat/lon) |
 | GET | `/api/attendance/report?date=YYYY-MM-DD` | Records + per-day/status summary |
-| GET | `/dashboard` | Manager dashboard (HTML) |
+| GET | `/manager/login` | Manager dashboard login page |
+| POST | `/manager/login` | Authenticate manager access |
+| GET | `/manager/logout` | Clear manager dashboard session |
+| GET | `/dashboard` | Manager dashboard (HTML, protected) |
 
 ## 9. Project structure
 

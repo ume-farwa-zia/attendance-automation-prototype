@@ -13,11 +13,22 @@
       <a class="navbar-brand" href="/">SafeX <span class="fw-light">Attendance</span></a>
       <div>
         <a class="nav-link d-inline text-light me-3" href="{{ url_for('attendance.checkin_page') }}">Check-in</a>
+        {% if session.get('manager_dashboard_access') %}
         <a class="nav-link d-inline text-light" href="{{ url_for('dashboard.dashboard') }}">Dashboard</a>
+        {% endif %}
       </div>
     </div>
   </nav>
   <main class="container py-4">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="mb-3">
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }} mb-2" role="alert">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
     {% block content %}{% endblock %}
   </main>
 </body>

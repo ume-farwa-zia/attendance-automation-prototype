@@ -40,7 +40,7 @@ Flask backend:
   6. Store attendance record (SQLite)
         │
         ▼
-Manager Dashboard (/dashboard)
+Manager Login (/manager/login) -> Manager Dashboard (/dashboard)
   - Pulls today's records via Pandas
   - Computes present / late / absent counts
   - Sends stats to Gemini (or rule-based fallback) for a plain-language
@@ -60,7 +60,7 @@ Manager Dashboard (/dashboard)
 | Services | `services/attendance_service.py` | Orchestrates the full check-in decision flow |
 | Services | `services/ai_service.py` | Gemini-based insights, with rule-based fallback |
 | Routes | `routes/attendance_routes.py` | Employee check-in page + `/checkin` endpoint |
-| Routes | `routes/dashboard_routes.py` | Manager dashboard |
+| Routes | `routes/dashboard_routes.py` | Manager login + protected dashboard |
 | Routes | `routes/api_routes.py` | JSON API: employee registration, QR issuance, reporting |
 | Frontend | `templates/`, `static/` | Bootstrap UI, camera scanner JS |
 

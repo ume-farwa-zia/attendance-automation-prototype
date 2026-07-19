@@ -16,6 +16,11 @@ BASE_DIR = Path(__file__).resolve().parent
 class Config:
     SECRET_KEY = os.getenv("SECRET_KEY", "dev-only-insecure-key-change-me")
 
+    # Optional shared password for the manager dashboard. When set, the
+    # dashboard requires a successful manager login before showing stats.
+    # A local default keeps the demo usable if .env has not been created yet.
+    MANAGER_DASHBOARD_PASSWORD = os.getenv("MANAGER_DASHBOARD_PASSWORD", "manager123")
+
     # SQLite database file
     DATABASE_PATH = BASE_DIR / "database" / "attendance.db"
 

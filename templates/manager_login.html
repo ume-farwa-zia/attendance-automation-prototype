@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Manager Login — SafeX Attendance{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-5 col-lg-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <div class="eyebrow">Manager Access</div>
+        <h4 class="mb-3">Enter dashboard password</h4>
+        <p class="text-muted small mb-3">Default local password: manager123</p>
+        <form method="post">
+          <div class="mb-3">
+            <label class="form-label" for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" autocomplete="current-password" required>
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Open Dashboard</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

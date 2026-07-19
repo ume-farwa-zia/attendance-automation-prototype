@@ -14,12 +14,13 @@ Demo notebook: [`notebook/demo.ipynb`](notebook/demo.ipynb)
 ```bash
 pip install -r requirements.txt
 cp .env.example .env
+# set MANAGER_DASHBOARD_PASSWORD in .env for dashboard access
 python sample_data/seed.py      # creates sample employees + their QR codes
 python app.py                   # http://127.0.0.1:5000
 ```
 
 - Employee check-in: `/` (camera QR scan + GPS)
-- Manager dashboard: `/dashboard`
+- Manager dashboard: `/manager/login` then `/dashboard`
 
 Or explore without a server:
 ```bash
@@ -39,8 +40,9 @@ jupyter notebook notebook/demo.ipynb   # executed walkthrough with sample I/O
 - **AI attendance insights** — Gemini-generated summary, health score, and
   recommendations on the dashboard, with a rule-based fallback if no API key
   is configured.
-- **Manager dashboard** — today's present/late/absent counts + full record
-  table, Bootstrap-based professional UI.
+- **Manager dashboard** — protected manager-only access for today's
+  present/late/absent counts + full record table, Bootstrap-based
+  professional UI.
 
 See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the full workflow
 diagram and design rationale.

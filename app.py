@@ -4,7 +4,7 @@ SafeX AI Attendance Automation — Flask application entrypoint.
 Run:
     python app.py
 Then open http://127.0.0.1:5000/ for the employee check-in page,
-or http://127.0.0.1:5000/dashboard for the manager dashboard.
+or use http://127.0.0.1:5000/manager/login to access the manager dashboard.
 """
 from flask import Flask
 
