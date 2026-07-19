@@ -11,11 +11,34 @@ from services.geofence_service import is_within_geofence
 from services.qr_service import verify_employee_token
 
 
-def _is_late(now: datetime) -> bool:
+def _get_office_start_time() -> time:
+    """Returns the office start time as a time object."""
+    start_h, start_m = map(int, Config.OFFICE_START_TIME.split(":"))
+    return time(hour=start_h, minute=start_m)
+
+
+def _get_late_cutoff_time() -> time:
+    """Returns the cutoff time after which check-ins are marked as LATE."""
     start_h, start_m = map(int, Config.OFFICE_START_TIME.split(":"))
     total_minutes = start_h * 60 + start_m + Config.LATE_GRACE_MINUTES
-    cutoff = time(hour=(total_minutes // 60) % 24, minute=total_minutes % 60)
-    return now.time() > cutoff
+    return time(hour=(total_minutes // 60) % 24, minute=total_minutes % 60)
+
+
+def _check_office_hours(now: datetime) -> str:
+    """
+    Check if current time is within office hours.
+    Returns: "BEFORE_HOURS" / "ON_TIME" / "LATE"
+    """
+    current_time = now.time()
+    office_start = _get_office_start_time()
+    late_cutoff = _get_late_cutoff_time()
+
+    if current_time < office_start:
+        return "BEFORE_HOURS"
+    elif current_time <= late_cutoff:
+        return "ON_TIME"
+    else:
+        return "LATE"
 
 
 def process_checkin(token: str, latitude: float, longitude: float) -> dict:
@@ -72,7 +95,20 @@ def process_checkin(token: str, latitude: float, longitude: float) -> dict:
             "message": f"You are {round(distance)}m from the office — outside the allowed {Config.GEOFENCE_RADIUS_METERS}m radius.",
         }
 
-    status = "LATE" if _is_late(now) else "PRESENT"
+    # Check if check-in is within office hours
+    office_hours_status = _check_office_hours(now)
+    if office_hours_status == "BEFORE_HOURS":
+        office_start = _get_office_start_time()
+        record_attendance(employee_id, today, now.isoformat(), latitude, longitude, round(distance, 1), "REJECTED_HOURS")
+        return {
+            "employee_id": employee_id,
+            "status": "REJECTED_HOURS",
+            "distance_m": round(distance, 1),
+            "checkin_time": now.isoformat(),
+            "message": f"Check-in not allowed before office hours ({office_start.strftime('%H:%M')}). Please try again during office hours.",
+        }
+
+    status = "LATE" if office_hours_status == "LATE" else "PRESENT"
     record_attendance(employee_id, today, now.isoformat(), latitude, longitude, round(distance, 1), status)
     return {
         "employee_id": employee_id,
